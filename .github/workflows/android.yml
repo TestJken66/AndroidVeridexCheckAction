@@ -47,12 +47,17 @@ jobs:
             tar zxvf ./appcompat.tar.gz
             echo "===================tar zxvf appcompat.tar.gz结果 ">>./veridex_check.txt
             ls -la>>./veridex_check.txt
-            tree>>./veridex_check.txt
+            # tree>>./veridex_check.txt
             cp appcompat/veridex-linux.zip ./veridex-linux.zip
             unzip veridex-linux.zip
             echo "=======unzip veridex-linux.zip">>./veridex_check.txt
             ls -la>>./veridex_check.txt
-            tree>>./veridex_check.txt
+            # tree>>./veridex_check.txt
+            cp ./dev-sdk/build/outputs/aar/dev-sdk-debug.aar ./dev-sdk-debug.aar
+            unzip ./dev-sdk-debug.aar
+            echo "========unzip dev-sdk-debug.aar" >>./veridex_check.txt
+            ls>>./veridex_check.txt
+            chmod -R 777 *
           fi
           
         #  if [ $# == 0 ]; then
