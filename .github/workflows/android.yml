@@ -35,32 +35,21 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-        cache: gradle
-
     - name: Build with Gradle
       shell: bash
       continue-on-error: true
       run: |
+          chmod -R 777 *
+          git config core.filemode false
           ./gradlew lint
+          ### export PATH
+          export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
           # test adb
           adb --help>>./env.txt
 
   upload:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-        cache: gradle
 
     - name: Upload tree
       uses: actions/upload-artifact@v1
