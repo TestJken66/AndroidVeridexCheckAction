@@ -27,18 +27,34 @@ jobs:
           chmod -R 777 *
           git config core.filemode false
           ./gradlew build
+
+
+      - name: veridex_check
+        shell: bash
+        continue-on-error: true
+        run: |
           ### export PATH
           export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
           echo "veridex_check 测试结果 ">./veridex_check.txt
           wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
           echo "下载完毕 ">>./veridex_check.txt
+          ls>>./veridex_check.txt
           tar zxvf appcompat.tar.gz
+          echo "解压 appcompat.tar.gz">>./veridex_check.txt
+          ls>>./veridex_check.txt
           unzip veridex-linux.zip -d veridex
           echo "解压veridex-linux.zip完毕 " >>./veridex_check.txt
+          ls>>./veridex_check.txt
           cp ./dev-sdk-debug.aar ./veridex/
+          echo "cp ./dev-sdk-debug.aar ./veridex/ " >>./veridex_check.txt
+          ls>>./veridex_check.txt
           cd veridex
+          echo "cd veridex " >>./veridex_check.txt
+          ls>>./veridex_check.txt
           chmod -R 777 *
           unzip dev-sdk-debug.aar
+          echo "unzip dev-sdk-debug.aar" >>./veridex_check.txt
+          ls>>./veridex_check.txt
           chmod -R 777 *
           echo "解压dev-sdk-debug方法，测试dx">>./veridex_check.txt
           ${ANDROID_HOME}/build-tools/30.0.3/dx >>./veridex_check.txt
