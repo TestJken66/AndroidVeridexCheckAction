@@ -64,7 +64,7 @@ jobs:
             ls>>./veridex_check.txt
             chmod -R 777 *
             echo "=============veridex[android12-release/appcompat] 检测结果==============" >>./veridex_check.txt
-            sh ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
+            bash ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
           fi
           
         #  if [ $# == 0 ]; then
