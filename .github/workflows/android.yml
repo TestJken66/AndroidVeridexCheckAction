@@ -48,10 +48,13 @@ jobs:
             wget https://android.googlesource.com/platform/prebuilts/runtime/+archive/refs/heads/android12-release/appcompat.tar.gz
             # wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
             chmod -R 777 *
+            echo "===================Download over===================">>./veridex_check.txt
+            ls -la>>./veridex_check.txt
+            # tree>>./veridex_check.txt
             tar zxvf ./appcompat.tar.gz
             echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
             ls -la>>./veridex_check.txt
-            # tree>>./veridex_check.txt
+            tree>>./veridex_check.txt
             cp appcompat/veridex-linux.zip ./veridex-linux.zip
             unzip veridex-linux.zip
             echo "=======unzip veridex-linux.zip===================">>./veridex_check.txt
