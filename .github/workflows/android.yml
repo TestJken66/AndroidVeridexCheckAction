@@ -43,7 +43,9 @@ jobs:
           echo "veridex_check 测试结果 ">./veridex_check.txt
           
           if [ $# == 0 ]; then
-            # wget https://android.googlesource.com/platform/prebuilts/runtime/+archive/refs/heads/android12-release/appcompat.tar.gz
+            # delete appcompat
+            rm -rf ./appcompat.tar.gz
+            wget https://android.googlesource.com/platform/prebuilts/runtime/+archive/refs/heads/android12-release/appcompat.tar.gz
             # wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
             tar zxvf ./appcompat.tar.gz
             echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
