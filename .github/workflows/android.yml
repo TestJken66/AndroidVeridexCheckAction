@@ -48,17 +48,7 @@ jobs:
               tar zxvf appcompat.tar.gz
               echo "========tar zxvf appcompat.tar.gz========">>./veridex_check.txt
               ls -la>>./veridex_check.txt
-              if [ $# == 0 ]; then
-                cd appcompat/
-                if [ $# == 0 ]; then
-                    echo "========cd appcompat/========">>./veridex_check.txt
-                    ls -la>>./veridex_check.txt
-                else
-                    echo "wwwww=cd appcompat/= 失败---=">>./veridex_check.txt
-                fi
-              else
-                echo "wwwwwww  失败了 =">>./veridex_check.txt
-              fi
+              tree>>./veridex_check.txt
             fi
           fi
           
