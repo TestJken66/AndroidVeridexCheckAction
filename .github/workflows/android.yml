@@ -12,47 +12,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-        cache: gradle
+      - uses: actions/checkout@v2
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
 
-    - name: Build with Gradle
-      shell: bash
-      continue-on-error: true
-      run: |
+      - name: Build with Gradle
+        shell: bash
+        continue-on-error: true
+        run: |
           chmod -R 777 *
           git config core.filemode false
           ./gradlew build
           ### export PATH
           export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
-          # test adb
-          type adb>>./env.txt
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Build with Gradle
-      shell: bash
-      continue-on-error: true
-      run: |
+          echo "veridex_check 测试结果 ">./veridex_check.txt
+          wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
+          echo "下载完毕 ">>./veridex_check.txt
+          tar zxvf appcompat.tar.gz
+          unzip veridex-linux.zip -d veridex
+          echo "解压veridex-linux.zip完毕 " >>./veridex_check.txt
+          cp ./dev-sdk-debug.aar ./veridex/
+          cd veridex
           chmod -R 777 *
-          git config core.filemode false
-          ./gradlew lint
-          ### export PATH
-          export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
-          # test adb
-          adb --help>>./env.txt
+          unzip dev-sdk-debug.aar
+          chmod -R 777 *
+          echo "解压dev-sdk-debug方法，测试dx">>./veridex_check.txt
+          ${ANDROID_HOME}/build-tools/30.0.3/dx >>./veridex_check.txt
+          echo "解压aar完毕，即将DX转换。。。。">>./veridex_check.txt
+          ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
+          echo "DX转换完成。。。。">>./veridex_check.txt
+          ls -la>>./veridex_check.txt
+          ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
 
-  upload:
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Upload tree
-      uses: actions/upload-artifact@v1
-      with:
-       name: env.txt
-       path: ./env.txt
+      - name: Upload veridex_check
+        if: success()
+        continue-on-error: true
+        uses: actions/upload-artifact@v1
+        with:
+          name: veridex_check.txt
+          path: ./veridex_check.txt
