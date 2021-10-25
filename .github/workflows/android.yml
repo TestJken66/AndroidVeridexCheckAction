@@ -6,7 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
+
+jobs:
+
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,25 +20,20 @@ env:
         distribution: 'adopt'
         cache: gradle
 
-jobs:
-
-  build:
-
-    # runs-on: ubuntu-latest
-    # steps:
-    # - uses: actions/checkout@v2
-    # - name: set up JDK 11
-    #   uses: actions/setup-java@v2
-    #   with:
-    #     java-version: '11'
-    #     distribution: 'adopt'
-    #     cache: gradle
-
-    - name: config file mode
-      run: |
-        chmod -R 777 *
-        git config core.filemode false
-
     - name: Build with Gradle
       shell: bash
-      run: ./gradlew build
+      continue-on-error: true
+      run: |
+          chmod -R 777 *
+          git config core.filemode false
+          ./gradlew build
+          ### export PATH
+          export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
+          # test adb
+          adb --help>>./env.txt
+          
+    - name: Upload tree
+      uses: actions/upload-artifact@v1
+      with:
+       name: env.txt
+       path: ./env.txt
