@@ -41,16 +41,30 @@ jobs:
           export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
           ./gradlew :dev-sdk:build
           echo "veridex_check 测试结果 ">./veridex_check.txt
-          wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
-          tar zxvf appcompat.tar.gz
-          echo "========tar zxvf appcompat.tar.gz========">>./veridex_check.txt
-          ls -la>>./veridex_check.txt
-          cd appcompat/
-          echo "========cd appcompat/========">>./veridex_check.txt
-          ls -la>>./veridex_check.txt
-          unzip veridex-linux.zip -d veridex
-          echo "unzip veridex-linux.zip -d veridex " >>./veridex_check.txt
-          ls -la>>./veridex_check.txt
+
+          if [ $# == 0 ]; then
+            wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
+            if [ $# == 0 ]; then
+              tar zxvf appcompat.tar.gz
+              echo "========tar zxvf appcompat.tar.gz========">>./veridex_check.txt
+              ls -la>>./veridex_check.txt
+              if [ $# == 0 ]; then
+                cd appcompat/
+                echo "========cd appcompat/========">>./veridex_check.txt
+                ls -la>>./veridex_check.txt
+                if [ $# == 0 ]; then
+                  unzip veridex-linux.zip -d veridex
+                  echo "unzip veridex-linux.zip -d veridex " >>./veridex_check.txt
+                  ls -la>>./veridex_check.txt
+                 fi
+              fi
+            fi
+          fi
+
+          #  if [ $# == 0 ]; then
+          #       fi
+
+
           # cp ./dev-sdk-debug.aar ./veridex/
           # echo "cp ./dev-sdk-debug.aar ./veridex/ " >>./veridex_check.txt
           # ls>>./veridex_check.txt
@@ -68,7 +82,7 @@ jobs:
           # ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
           # echo "DX转换完成。。。。">>./veridex_check.txt
           # ls -la>>./veridex_check.txt
-          # ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
+        # ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
 
       - name: Upload veridex_check
         if: success()
