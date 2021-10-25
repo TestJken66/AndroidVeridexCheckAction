@@ -44,10 +44,13 @@ jobs:
           wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
           tar zxvf appcompat.tar.gz
           echo "========tar zxvf appcompat.tar.gz========">>./veridex_check.txt
-          ls>>./veridex_check.txt
+          ls -la>>./veridex_check.txt
+          cd appcompat/
+          echo "========cd appcompat/========">>./veridex_check.txt
+          ls -la>>./veridex_check.txt
           unzip veridex-linux.zip -d veridex
           echo "unzip veridex-linux.zip -d veridex " >>./veridex_check.txt
-          ls>>./veridex_check.txt
+          ls -la>>./veridex_check.txt
           # cp ./dev-sdk-debug.aar ./veridex/
           # echo "cp ./dev-sdk-debug.aar ./veridex/ " >>./veridex_check.txt
           # ls>>./veridex_check.txt
