@@ -47,32 +47,38 @@ jobs:
             rm -rf ./appcompat.tar.gz
             wget https://android.googlesource.com/platform/prebuilts/runtime/+archive/refs/heads/android12-release/appcompat.tar.gz
             # wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
-            chmod -R 777 *
-            echo "===================Download over===================">>./veridex_check.txt
-            ls -la>>./veridex_check.txt
-            # tree>>./veridex_check.txt
-            tar zxvf ./appcompat.tar.gz
-            chmod -R 777 *
-            echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
-            ls -la>>./veridex_check.txt
-            tree>>./veridex_check.txt
-            # use native file,need copy
-            # cp appcompat/veridex-linux.zip ./veridex-linux.zip
-            unzip veridex-linux.zip
-            echo "=======unzip veridex-linux.zip===================">>./veridex_check.txt
-            ls -la>>./veridex_check.txt
-            # tree>>./veridex_check.txt
-            cp ./dev-sdk/build/outputs/aar/dev-sdk-debug.aar ./dev-sdk-debug.aar
-            unzip ./dev-sdk-debug.aar
-            echo "========unzip dev-sdk-debug.aar===================" >>./veridex_check.txt
-            ls>>./veridex_check.txt
-            chmod -R 777 *
-            ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
-            echo "========convery jar 2 dex===================" >>./veridex_check.txt
-            ls>>./veridex_check.txt
-            chmod -R 777 *
-            echo "=============veridex[android12-release/appcompat] 检测结果==============" >>./veridex_check.txt
-            bash ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
+            if [ $# == 0 ]; then
+              chmod -R 777 *
+              echo "===================Download over===================">>./veridex_check.txt
+              ls -la>>./veridex_check.txt
+              # tree>>./veridex_check.txt
+              tar zxvf ./appcompat.tar.gz
+              chmod -R 777 *
+              echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
+              ls -la>>./veridex_check.txt
+              #tree>>./veridex_check.txt
+              if [ $# == 0 ]; then
+                # use native file,need copy
+                # cp appcompat/veridex-linux.zip ./veridex-linux.zip
+                unzip ./veridex-linux.zip
+                echo "=======unzip veridex-linux.zip===================">>./veridex_check.txt
+                ls -la>>./veridex_check.txt
+                # tree>>./veridex_check.txt
+                cp ./dev-sdk/build/outputs/aar/dev-sdk-debug.aar ./dev-sdk-debug.aar
+                unzip ./dev-sdk-debug.aar
+                echo "========unzip dev-sdk-debug.aar===================" >>./veridex_check.txt
+                ls>>./veridex_check.txt
+                chmod -R 777 *
+                ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
+                echo "========convery jar 2 dex===================" >>./veridex_check.txt
+                ls>>./veridex_check.txt
+                chmod -R 777 *
+                echo "=============veridex[android12-release/appcompat] 检测结果==============" >>./veridex_check.txt
+                bash ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
+              fi # end with ./appcompat.tar.gz
+              
+            fi # end with wget
+            
           fi
           
         #  if [ $# == 0 ]; then
