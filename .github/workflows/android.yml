@@ -82,31 +82,9 @@ jobs:
               fi # end with ./appcompat.tar.gz
               
             fi # end with wget
-            
-          fi
-          
-        #  if [ $# == 0 ]; then
-        #       fi
-         
-          
-          # cp ./dev-sdk-debug.aar ./veridex/
-          # echo "cp ./dev-sdk-debug.aar ./veridex/ " >>./veridex_check.txt
-          # ls>>./veridex_check.txt
-          # cd veridex
-          # echo "cd veridex " >>./veridex_check.txt
-          # ls>>./veridex_check.txt
-          # chmod -R 777 *
-          # unzip dev-sdk-debug.aar
-          # echo "unzip dev-sdk-debug.aar" >>./veridex_check.txt
-          # ls>>./veridex_check.txt
-          # chmod -R 777 *
-          # echo "解压dev-sdk-debug方法，测试dx">>./veridex_check.txt
-          # ${ANDROID_HOME}/build-tools/30.0.3/dx >>./veridex_check.txt
-          # echo "解压aar完毕，即将DX转换。。。。">>./veridex_check.txt
-          # ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
-          # echo "DX转换完成。。。。">>./veridex_check.txt
-          # ls -la>>./veridex_check.txt
-          # ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
+
+          fi # end with ./gradlew :dev-sdk:build
+
 
       - name: Upload veridex_check
         if: success()
