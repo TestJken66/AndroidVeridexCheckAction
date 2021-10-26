@@ -52,6 +52,7 @@ jobs:
               echo "===================Download over===================">>./veridex_check.txt
               ls -la>>./veridex_check.txt
               # tree>>./veridex_check.txt
+              # 官方包解压到本地，即 MODULE_LICENSE_APACHE hiddenapi-flags.csv veridex-mac.zip NOTICE update.py README.txt veridex-linux.zip
               tar zxvf ./appcompat.tar.gz
               chmod -R 777 *
               echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
@@ -60,6 +61,9 @@ jobs:
               if [ $# == 0 ]; then
                 # use native file,need copy
                 # cp appcompat/veridex-linux.zip ./veridex-linux.zip
+                # delete package from network
+                rm -rf MODULE_LICENSE_APACHE hiddenapi-flags.csv  veridex-mac.zip NOTICE update.py README.txt 
+                # use wget package has 
                 unzip ./veridex-linux.zip
                 echo "=======unzip veridex-linux.zip===================">>./veridex_check.txt
                 ls -la>>./veridex_check.txt
