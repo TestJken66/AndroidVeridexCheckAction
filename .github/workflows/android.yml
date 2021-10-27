@@ -128,6 +128,7 @@ jobs:
           cd $pa
           wget https://raw.githubusercontent.com/FisherWY/Shell/master/mdout/install_mdout.sh -O - | bash /dev/stdin
           type mdout>>$pa/test.txt
+          mdout --version>>$pa/test.txt
 
 
 
