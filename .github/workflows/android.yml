@@ -125,6 +125,11 @@ jobs:
           echo "当前工作目录:$pa">>test.txt
           cd
           echo "主目录:$(pwd)">>$pa/test.txt
+          cd $pa
+          wget https://raw.githubusercontent.com/FisherWY/Shell/master/mdout/install_mdout.sh -O - | bash /dev/stdin
+          type mdout>>$pa/test.txt
+
+
 
 
       - name: Upload veridex_check
