@@ -144,9 +144,8 @@ jobs:
           # https://docs.github.com/cn/actions/learn-github-actions/contexts#github-context
           # update file success
           #java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file $pa/install_mdout.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. Project: ${{ github.repository }} Job ${{ github.job }}, created by ${{ github.workflow }} " -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
-          content="Project: ${{ github.repository }} Job ${{ github.job }}\r\nBuild commit ${{ github.sha }}\r\n $(cat $pa/install_mdout.txt)"
-          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -content-no-base64 $content -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. Project: ${{ github.repository }} Job ${{ github.job }}, created by ${{ github.workflow }} " -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
-
+          echo "Project: ${{ github.repository }} Job ${{ github.job }}\r\nBuild commit ${{ github.sha }}">>$pa/install_mdout.txt
+          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file $pa/install_mdout.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. Project: ${{ github.repository }} Job ${{ github.job }}, created by ${{ github.workflow }} " -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
           
 
       # - name: Upload veridex_check
