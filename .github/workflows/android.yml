@@ -9,90 +9,92 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: set up JDK 11
+  #       uses: actions/setup-java@v2
+  #       with:
+  #         java-version: '11'
+  #         distribution: 'adopt'
+  #         cache: gradle
 
-      - name: Prepare config
-        shell: bash
-        continue-on-error: true
-        run: |
-          chmod -R 777 *
-          git config core.filemode false
+  #     - name: Prepare config
+  #       shell: bash
+  #       continue-on-error: true
+  #       run: |
+  #         chmod -R 777 *
+  #         git config core.filemode false
 
-      # - name: Gradle Build 
-      #   shell: bash
-      #   continue-on-error: true
-      #   run: |
-      #     ./gradlew build
+  #     # - name: Gradle Build 
+  #     #   shell: bash
+  #     #   continue-on-error: true
+  #     #   run: |
+  #     #     ./gradlew build
 
-      - name: veridex_check
-        shell: bash
-        continue-on-error: true
-        run: |
-          ### export PATH
-          export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
-          ./gradlew :dev-sdk:build
-          echo "veridex_check 测试结果 ">./veridex_check.txt
+  #     - name: veridex_check
+  #       shell: bash
+  #       continue-on-error: true
+  #       run: |
+  #         ### export PATH
+  #         export PATH=$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/build-tools/30.0.3:${ANDROID_HOME}/build-tools/30.0.3/lld-bin:${ANDROID_HOME}/ndk/23.0.7599858
+  #         ./gradlew :dev-sdk:build
+  #         echo "veridex_check 测试结果 ">./veridex_check.txt
           
-          if [ $# == 0 ]; then
-            # delete appcompat
-            rm -rf ./appcompat.tar.gz
-            wget https://android.googlesource.com/platform/prebuilts/runtime/+archive/refs/heads/android12-release/appcompat.tar.gz
-            # wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
-            if [ $# == 0 ]; then
-              chmod -R 777 *
-              echo "===================Download over===================">>./veridex_check.txt
-              ls -la>>./veridex_check.txt
-              # tree>>./veridex_check.txt
-              # 官方包解压到本地，即 MODULE_LICENSE_APACHE hiddenapi-flags.csv veridex-mac.zip NOTICE update.py README.txt veridex-linux.zip
-              tar zxvf ./appcompat.tar.gz
-              chmod -R 777 *
-              echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
-              ls -la>>./veridex_check.txt
-              #tree>>./veridex_check.txt
-              if [ $# == 0 ]; then
-                # use native file,need copy
-                # cp appcompat/veridex-linux.zip ./veridex-linux.zip
-                # delete package from network
-                rm -rf MODULE_LICENSE_APACHE hiddenapi-flags.csv  veridex-mac.zip NOTICE update.py README.txt 
-                # use wget package has 
-                unzip ./veridex-linux.zip
-                echo "=======unzip veridex-linux.zip===================">>./veridex_check.txt
-                ls -la>>./veridex_check.txt
-                # tree>>./veridex_check.txt
-                cp ./dev-sdk/build/outputs/aar/dev-sdk-debug.aar ./dev-sdk-debug.aar
-                unzip ./dev-sdk-debug.aar
-                echo "========unzip dev-sdk-debug.aar===================" >>./veridex_check.txt
-                ls>>./veridex_check.txt
-                chmod -R 777 *
-                ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
-                echo "========convery jar 2 dex===================" >>./veridex_check.txt
-                ls>>./veridex_check.txt
-                chmod -R 777 *
-                echo "=============veridex[android12-release/appcompat] 检测结果==============" >>./veridex_check.txt
-                bash ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
-              fi # end with ./appcompat.tar.gz
+  #         if [ $# == 0 ]; then
+  #           # delete appcompat
+  #           rm -rf ./appcompat.tar.gz
+  #           wget https://android.googlesource.com/platform/prebuilts/runtime/+archive/refs/heads/android12-release/appcompat.tar.gz
+  #           # wget https://github.com/hhhaiai/tools/releases/download/v1.0/appcompat.tar.gz
+  #           if [ $# == 0 ]; then
+  #             chmod -R 777 *
+  #             echo "===================Download over===================">>./veridex_check.txt
+  #             ls -la>>./veridex_check.txt
+  #             # tree>>./veridex_check.txt
+  #             # 官方包解压到本地，即 MODULE_LICENSE_APACHE hiddenapi-flags.csv veridex-mac.zip NOTICE update.py README.txt veridex-linux.zip
+  #             tar zxvf ./appcompat.tar.gz
+  #             chmod -R 777 *
+  #             echo "===================tar zxvf appcompat.tar.gz结果===================">>./veridex_check.txt
+  #             ls -la>>./veridex_check.txt
+  #             #tree>>./veridex_check.txt
+  #             if [ $# == 0 ]; then
+  #               # use native file,need copy
+  #               # cp appcompat/veridex-linux.zip ./veridex-linux.zip
+  #               # delete package from network
+  #               rm -rf MODULE_LICENSE_APACHE hiddenapi-flags.csv  veridex-mac.zip NOTICE update.py README.txt 
+  #               # use wget package has 
+  #               unzip ./veridex-linux.zip
+  #               echo "=======unzip veridex-linux.zip===================">>./veridex_check.txt
+  #               ls -la>>./veridex_check.txt
+  #               # tree>>./veridex_check.txt
+  #               cp ./dev-sdk/build/outputs/aar/dev-sdk-debug.aar ./dev-sdk-debug.aar
+  #               unzip ./dev-sdk-debug.aar
+  #               echo "========unzip dev-sdk-debug.aar===================" >>./veridex_check.txt
+  #               ls>>./veridex_check.txt
+  #               chmod -R 777 *
+  #               ${ANDROID_HOME}/build-tools/30.0.3/dx --dex --output=target.dex classes.jar
+  #               echo "========convery jar 2 dex===================" >>./veridex_check.txt
+  #               ls>>./veridex_check.txt
+  #               chmod -R 777 *
+  #               echo "=============veridex[android12-release/appcompat] 检测结果==============" >>./veridex_check.txt
+  #               bash ./appcompat.sh --dex-file=target.dex>>./veridex_check.txt
+                
+                
+  #             fi # end with ./appcompat.tar.gz
               
-            fi # end with wget
+  #           fi # end with wget
 
-          fi # end with ./gradlew :dev-sdk:build
+  #         fi # end with ./gradlew :dev-sdk:build
 
 
-      - name: Upload veridex_check
-        if: success()
-        continue-on-error: true
-        uses: actions/upload-artifact@v1
-        with:
-          name: veridex_check.txt
-          path: ./veridex_check.txt
+  #     - name: Upload veridex_check
+  #       if: success()
+  #       continue-on-error: true
+  #       uses: actions/upload-artifact@v1
+  #       with:
+  #         name: veridex_check.txt
+  #         path: ./veridex_check.txt
 
 
   install_mdout_env:
@@ -130,11 +132,19 @@ jobs:
           type mdout>>$pa/install_mdout.txt
           mdout --version>>$pa/install_mdout.txt
 
+          # upload files
+          wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
+          dat=$(date "+%Y-%m-%d_%H:%M:%S")
+          uploadname="ci/$pa/install_mdout.txt"
+          chmod -R 777 *
+          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file ./tree.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. created by ${{ github.workflow }} -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
 
-      - name: Upload veridex_check
-        if: success()
-        continue-on-error: true
-        uses: actions/upload-artifact@v1
-        with:
-          name: install_mdout.txt
-          path: ./install_mdout.txt
+
+
+      # - name: Upload veridex_check
+      #   if: success()
+      #   continue-on-error: true
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: install_mdout.txt
+      #     path: ./install_mdout.txt
