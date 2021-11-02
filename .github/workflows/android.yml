@@ -135,7 +135,7 @@ jobs:
           # upload files
           wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
           dat=$(date "+%Y-%m-%d_%H:%M:%S")
-          uploadname="ci/$pa/install_mdout.txt"
+          uploadname="ci/$dat/install_mdout.txt"
           chmod -R 777 *
           echo "=================文件查看===================="
           ls
