@@ -135,13 +135,13 @@ jobs:
           # upload files
           wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
           dat=$(date "+%Y-%m-%d_%H:%M:%S")
-          uploadname="ci/$dat/install_mdout.txt"
+          uploadname="ci/${dat}_install_mdout.txt"
           chmod -R 777 *
           echo "=================文件查看===================="
           ls
           echo "==dat== $dat"
           echo "==dat== $uploadname"
-          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file ./tree.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. created by ${{ github.workflow }} -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
+          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file $pa/install_mdout.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. created by ${{ github.workflow }} -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
 
 
 
