@@ -141,8 +141,8 @@ jobs:
           ls
           echo "==dat== $dat"
           echo "==dat== $uploadname"
-          echo "java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file $pa/install_mdout.txt  -token ${{ secrets.GTOKEN }} -commit-messge  \"GitHubAction: Build commit ${{ github.sha }}. created by ${{ github.workflow }} \" -commit-auther \"UploadGithubService\" -commit-email \"sanbo.xyz@gmail.com\""
-          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file $pa/install_mdout.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. created by ${{ github.workflow }} " -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
+          # https://docs.github.com/cn/actions/learn-github-actions/contexts#github-context
+          java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file $pa/install_mdout.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. Project: ${{ github.repository }} Job ${{ github.job }}, created by ${{ github.workflow }} " -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
 
 
       # - name: Upload veridex_check
