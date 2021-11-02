@@ -137,6 +137,10 @@ jobs:
           dat=$(date "+%Y-%m-%d_%H:%M:%S")
           uploadname="ci/$pa/install_mdout.txt"
           chmod -R 777 *
+          echo "=================文件查看===================="
+          ls
+          echo "==dat== $dat"
+          echo "==dat== $uploadname"
           java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner hhhaiai -repo Git_result -target-dir-full-name  $uploadname -native-file ./tree.txt  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction: Build commit ${{ github.sha }}. created by ${{ github.workflow }} -commit-auther "UploadGithubService" -commit-email "sanbo.xyz@gmail.com"
 
 
